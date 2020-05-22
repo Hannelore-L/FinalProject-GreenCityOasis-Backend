@@ -1,6 +1,7 @@
 
 ###> symfony/framework-bundle ###
 /.env.local
+/.env.production
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
@@ -8,3 +9,4 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+/.vscode
