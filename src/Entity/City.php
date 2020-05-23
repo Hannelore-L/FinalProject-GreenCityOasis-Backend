@@ -34,6 +34,11 @@ class City
      */
     private $city_name;
 
+    /**
+     * @ORM\Column(type="string", length=512)
+     */
+    private $city_province;
+
     public function getCityId(): ?int
     {
         return $this->city_id;
@@ -71,6 +76,18 @@ class City
     public function setCityName(string $city_name): self
     {
         $this->city_name = $city_name;
+
+        return $this;
+    }
+
+    public function getCityProvince(): ?string
+    {
+        return $this->city_province;
+    }
+
+    public function setCityProvince(string $city_province): self
+    {
+        $this->city_province = $city_province;
 
         return $this;
     }
