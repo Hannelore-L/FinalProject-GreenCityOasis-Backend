@@ -1,26 +1,37 @@
 <?php
 
+//        -        -        -        N A M E S P A C E        -        -        -
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
+//        -        -        -        U S E        -        -        -
 use App\Repository\ImageRepository;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
+//        -        -        -        C L A S S        -        -        -
 /**
- * @ApiResource()
+ * Image
+ * @ApiResource(
+ *     collectionOperations={ "get", "post" },
+ *     itemOperations={ "get", "put" },
+ * )
  * @ORM\Entity(repositoryClass=ImageRepository::class)
+ * @ORM\Table(name="image")
  */
 class Image
 {
+    //        -        -        -        P R O P E R T I E S        -        -        -
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $image_id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=512)
+     * @Groups({"image_info:write"})
      */
     private $image_name;
 
@@ -60,9 +71,18 @@ class Image
     private $image_is_deleted;
 
 
-    public function getImageId(): ?int
+    //        -        -        -        M E T H O D S        -        -        -
+
+    //  getter ID
+
+    /**
+     * The ID of the location
+     *
+     * @Groups( { "locations:read" } )
+     */
+    public function getId(): ?int
     {
-        return $this->image_id;
+        return $this->id;
     }
 
     public function getImageName(): ?string
@@ -160,5 +180,4 @@ class Image
 
         return $this;
     }
-
 }
