@@ -7,7 +7,10 @@ use App\Repository\CityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *        collectionOperations={ "get" },
+ *        itemOperations={ "get" }
+ * )
  * @ORM\Entity(repositoryClass=CityRepository::class)
  */
 class City
@@ -17,7 +20,7 @@ class City
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $city_id;
+    private $id;
 
     /**
      * @ORM\Column(type="integer")
@@ -39,9 +42,9 @@ class City
      */
     private $city_province;
 
-    public function getCityId(): ?int
+    public function getId(): ?int
     {
-        return $this->city_id;
+        return $this->id;
     }
 
     public function getCityCountryId(): ?int

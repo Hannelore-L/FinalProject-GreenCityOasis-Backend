@@ -17,7 +17,7 @@ class Event
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $event_id;
+    private $id;
 
     /**
      * @ORM\Column(type="text")
@@ -39,9 +39,9 @@ class Event
      */
     private $event_time;
 
-    public function getEventId(): ?int
+    public function getId(): ?int
     {
-        return $this->event_id;
+        return $this->id;
     }
 
     public function getEventDesc(): ?string

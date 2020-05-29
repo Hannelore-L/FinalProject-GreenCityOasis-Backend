@@ -17,7 +17,7 @@ class EventLocation
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $event_location_id;
+    private $id;
 
     /**
      * @ORM\Column(type="integer")
@@ -29,9 +29,9 @@ class EventLocation
      */
     private $event_location_event_id;
 
-    public function getEventLocationId(): ?int
+    public function getId(): ?int
     {
-        return $this->event_location_id;
+        return $this->id;
     }
 
     public function getEventLocationLocationId(): ?int

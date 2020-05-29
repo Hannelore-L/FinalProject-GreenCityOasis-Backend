@@ -7,7 +7,10 @@ use App\Repository\CountryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *        collectionOperations={ "get" },
+ *        itemOperations={ "get" }
+ * )
  * @ORM\Entity(repositoryClass=CountryRepository::class)
  */
 class Country
@@ -17,16 +20,16 @@ class Country
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $country_id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=512)
      */
     private $country_name;
 
-    public function getCountryId(): ?int
+    public function getId(): ?int
     {
-        return $this->country_id;
+        return $this->id;
     }
 
     public function getCountryName(): ?string

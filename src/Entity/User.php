@@ -17,7 +17,7 @@ class User
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $user_id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=512)
@@ -64,9 +64,9 @@ class User
      */
     private $user_regkey;
 
-    public function getUserId(): ?int
+    public function getId(): ?int
     {
-        return $this->user_id;
+        return $this->id;
     }
 
     public function getUserUsername(): ?string

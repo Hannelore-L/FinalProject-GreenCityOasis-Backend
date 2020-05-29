@@ -17,16 +17,16 @@ class Tag
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $tag_id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=512)
      */
     private $tag_desc;
 
-    public function getTagId(): ?int
+    public function getId(): ?int
     {
-        return $this->tag_id;
+        return $this->id;
     }
 
     public function getTagDesc(): ?string

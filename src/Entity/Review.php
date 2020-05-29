@@ -17,7 +17,7 @@ class Review
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $review_id;
+    private $id;
 
     /**
      * @ORM\Column(type="integer")
@@ -39,9 +39,9 @@ class Review
      */
     private $review_user_id;
 
-    public function getReviewId(): ?int
+    public function getId(): ?int
     {
-        return $this->review_id;
+        return $this->id;
     }
 
     public function getReviewRating(): ?int

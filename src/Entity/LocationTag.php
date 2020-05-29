@@ -17,7 +17,7 @@ class LocationTag
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $location_tag_id;
+    private $id;
 
     /**
      * @ORM\Column(type="integer")
@@ -29,9 +29,9 @@ class LocationTag
      */
     private $location_tag_tag_id;
 
-    public function getLocationTagId(): ?int
+    public function getId(): ?int
     {
-        return $this->location_tag_id;
+        return $this->id;
     }
 
     public function getLocationTagLocationId(): ?int
