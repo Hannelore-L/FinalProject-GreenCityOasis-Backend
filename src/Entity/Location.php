@@ -1,29 +1,35 @@
 <?php
 
-//        -        -        -        N A M E S P A C E        -        -        -
+//      __________________________________________________________________________________
+//                                                                     N A M E S P A C E
+//      __________________________________________________________________________________
 namespace App\Entity;
 
 
-//        -        -        -        U S E        -        -        -
+//      __________________________________________________________________________________
+//                                                                                U S E
+//      __________________________________________________________________________________
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\LocationRepository;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Repository\LocationRepository;
 use Carbon\Carbon;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 
-//        -        -        -        C L A S S        -        -        -
+//      __________________________________________________________________________________
+//                                                                             C L A S S
+//      __________________________________________________________________________________
 /**
  * @ApiResource(
  *     collectionOperations={ "get" },
  *     itemOperations={ "get" },
- *     normalizationContext={"groups"={"locations:read"}, "swagger_definition_name"="Read"},
- *     denormalizationContext={"groups"={"locations:write"}, "swagger_definition_name"="Write"}
+ *     normalizationContext={ "groups"={ "locations:read" }, "swagger_definition_name"="Read" }
  * )
  * @ORM\Entity(repositoryClass=LocationRepository::class)
  * @ApiFilter( BooleanFilter::class, properties={ "location_is_deleted" } )
@@ -31,7 +37,11 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  */
 class Location
 {
-    //        -        -        -        P R O P E R T I E S        -        -        -
+    //      __________________________________________________________________________________
+    //                                                                     P R O P E R T I E S
+    //      __________________________________________________________________________________
+
+    //      -               -               -               I D               -               -               -
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -39,46 +49,87 @@ class Location
      */
     private $id;
 
+    //      -               -               -               T I T L E               -               -               -
     /**
      * @ORM\Column(type="string", length=512)
      */
     private $location_title;
 
+    //      -               -               -               UNIQUE               -               -               -
     /**
      * @ORM\Column(type="string", length=512)
      */
     private $location_unique;
 
+    //      -               -               -               A D D R E S S   T E X T               -               -               -
     /**
      * @ORM\Column(type="string", length=512)
      */
     private $location_address_text;
 
+    //      -               -               -               A D D R E S S   I N F O               -               -               -
     /**
      * @ORM\Column(type="string", length=512)
      */
     private $location_address_info;
 
+    //      -               -               -               D E S C R I P T I O N               -               -               -
     /**
      * @ORM\Column(type="text")
      */
     private $location_desc;
 
+    //      -               -               -               C R E A T E D   A T               -               -               -
     /**
      * @ORM\Column(type="datetime")
      */
     private $location_created_at;
 
+    //      -               -               -               I S   D E L E T E D               -               -               -
     /**
      * @ORM\Column(type="boolean")
      */
     private $location_is_deleted;
 
 
-//        -        -        -        M E T H O D S        -        -        -
+    //      -               -               -               I M A G E S               -               -               -
+    /**
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="image_location_id")
+     */
+    private $images;
 
-    //  getter ID
+    //      -               -               -               R E V I E W S               -               -               -
+    /**
+     * @ORM\OneToMany(targetEntity=Review::class, mappedBy="review_location_id")
+     */
+    private $reviews;
 
+    //      -               -               -               T A G S               -               -               -
+    /**
+     * @ORM\ManyToMany(targetEntity=Tag::class, mappedBy="tag_location_id")
+     */
+    private $tags;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Event::class, mappedBy="event_location_id")
+     */
+    private $events;
+
+
+    //      __________________________________________________________________________________
+    //                                                                        M E T H O D S
+    //      __________________________________________________________________________________
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
+        $this->tags = new ArrayCollection();
+        $this->events = new ArrayCollection();
+    }
+
+
+    //      -               -               -              getter ID               -               -               -
     /**
      * The ID of the location
      *
@@ -90,8 +141,7 @@ class Location
     }
 
 
-    //  getter & setter TITLE
-
+    //      -               -               -              getter & setter TITLE               -               -               -
     /**
      * The title of the location
      *
@@ -104,8 +154,6 @@ class Location
 
     /**
      * The name of the location
-     *
-     * @Groups( { "locations:write" } )
      */
     public function setLocationTitle(string $location_title): self
     {
@@ -115,8 +163,7 @@ class Location
     }
 
 
-    //  getter & setter UNIQUE
-
+    //      -               -               -              getter & setter UNIQUE               -               -               -
     /**
      * The unique property of the location
      *
@@ -129,8 +176,6 @@ class Location
 
     /**
      * The unique property of the location
-     *
-     * @Groups( { "locations:write" } )
      */
     public function setLocationUnique(string $location_unique): self
     {
@@ -140,8 +185,7 @@ class Location
     }
 
 
-    //  getter & setter ADDRESS TEXT
-
+    //      -               -               -              getter & setter ADDRESS TEXT               -               -               -
     /**
      * The address of the location in text format
      *
@@ -154,8 +198,6 @@ class Location
 
     /**
      * The address of the location in text format
-     *
-     * @Groups( { "locations:write" } )
      */
     public function setLocationAddressText(string $location_address_text): self
     {
@@ -165,8 +207,7 @@ class Location
     }
 
 
-    //  getter & setter ADDRESS INFO
-
+    //      -               -               -              getter & setter ADDRESS INFO               -               -               -
     /**
      * The info about the address for maps
      *
@@ -179,8 +220,6 @@ class Location
 
     /**
      * The info about the address for maps
-     *
-     * @Groups( { "locations:write" } )
      */
     public function setLocationAddressInfo(string $location_address_info): self
     {
@@ -190,8 +229,7 @@ class Location
     }
 
 
-    //  getter & setter DESCRIPTION
-
+    //      -               -               -              getter & setter DESCRIPTION               -               -               -
     /**
      * The text description for the location
      *
@@ -204,8 +242,6 @@ class Location
 
     /**
      * The text description for the location
-     *
-     * @Groups( { "locations:write" } )
      */
     public function setLocationDesc(string $location_desc): self
     {
@@ -214,9 +250,11 @@ class Location
         return $this;
     }
 
-
-    //  getter & setter CREATED AT
-        public function getLocationCreatedAt(): ?\DateTimeInterface
+    //      -               -               -              getter & setter CREATED AT               -               -               -
+    /**
+     * The time the entry of the location was created
+     */
+    public function getLocationCreatedAt(): ?\DateTimeInterface
     {
         return $this->location_created_at;
     }
@@ -234,8 +272,6 @@ class Location
 
     /**
      * The time the entry of the location was created
-     *
-     * @Groups( { "locations:write" } )
      */
     public function setLocationCreatedAt(\DateTimeInterface $location_created_at): self
     {
@@ -244,8 +280,7 @@ class Location
         return $this;
     }
 
-    //  getter & setter IS DELETED
-
+    //      -               -               -              getter & setter IS DELETED               -               -               -
     /**
      * The soft delete for this location entry
      *
@@ -258,12 +293,144 @@ class Location
 
     /**
      * The soft delete for this location entry
-     *
-     * @Groups( { "locations:write" } )
      */
     public function setLocationIsDeleted(bool $location_is_deleted): self
     {
         $this->location_is_deleted = $location_is_deleted;
+
+        return $this;
+    }
+
+
+    //      -               -               -              getter, adder & remover IMAGE               -               -               -
+    /**
+     * The images belonging to these locations
+     *
+     * @return Collection|Image[]
+     * @Groups( { "locations:read" } )
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setImageLocationId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getImageLocationId() === $this) {
+                $image->setImageLocationId(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+
+    //      -               -               -              getter, adder & remover REVIEW               -               -               -
+    /**
+     * The reviews belonging to these locations
+     *
+     * @return Collection|Review[]
+     * @Groups( { "locations:read" } )
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews[] = $review;
+            $review->setReviewLocationId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): self
+    {
+        if ($this->reviews->contains($review)) {
+            $this->reviews->removeElement($review);
+            // set the owning side to null (unless already changed)
+            if ($review->getReviewLocationId() === $this) {
+                $review->setReviewLocationId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    //      -               -               -              getter, adder & remover TAG               -               -               -
+    /**
+     * @return Collection|Tag[]
+     * @Groups( { "locations:read" } )
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+            $tag->addTagLocationId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        if ($this->tags->contains($tag)) {
+            $this->tags->removeElement($tag);
+            $tag->removeTagLocationId($this);
+        }
+
+        return $this;
+    }
+
+
+    //      -               -               -              getter, adder & remover TAG               -               -               -
+    /**
+     * @return Collection|Event[]
+     * @Groups( { "locations:read" } )
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+            $event->addEventLocationId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->contains($event)) {
+            $this->events->removeElement($event);
+            $event->removeEventLocationId($this);
+        }
 
         return $this;
     }
