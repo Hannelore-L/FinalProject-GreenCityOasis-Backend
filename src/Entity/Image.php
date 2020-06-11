@@ -250,7 +250,7 @@ class Image
      *
      * @Groups( { "image:read" } )
      */
-    public function getImageLocationId(): ?location
+    public function getImageLocationId(): ?Location
     {
         return $this->image_location_id;
     }
@@ -260,7 +260,7 @@ class Image
      *
      * @Groups( { "image:write" } )
      */
-    public function setImageLocationId(?location $image_location_id): self
+    public function setImageLocationId(?Location $image_location_id): self
     {
         $this->image_location_id = $image_location_id;
 

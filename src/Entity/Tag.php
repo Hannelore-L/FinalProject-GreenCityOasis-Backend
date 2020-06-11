@@ -85,14 +85,14 @@ class Tag
      * @Groups( { "tag:read" } )
      */
     /**
-     * @return Collection|location[]
+     * @return Collection|Location[]
      */
     public function getTagLocationId(): Collection
     {
         return $this->tag_location_id;
     }
 
-    public function addTagLocationId(location $tagLocationId): self
+    public function addTagLocationId( Location $tagLocationId): self
     {
         if (!$this->tag_location_id->contains($tagLocationId)) {
             $this->tag_location_id[] = $tagLocationId;
@@ -101,7 +101,7 @@ class Tag
         return $this;
     }
 
-    public function removeTagLocationId(location $tagLocationId): self
+    public function removeTagLocationId( Location $tagLocationId): self
     {
         if ($this->tag_location_id->contains($tagLocationId)) {
             $this->tag_location_id->removeElement($tagLocationId);

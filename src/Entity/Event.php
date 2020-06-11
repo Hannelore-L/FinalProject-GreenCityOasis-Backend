@@ -101,14 +101,14 @@ class Event
      * The ID of the location where the event will be
      *
      * @Groups( { "event:read" } )
-     * @return Collection|location[]
+     * @return Collection|Location[]
      */
     public function getEventLocationId(): Collection
     {
         return $this->event_location_id;
     }
 
-    public function addEventLocationId(location $eventLocationId): self
+    public function addEventLocationId( Location $eventLocationId): self
     {
         if (!$this->event_location_id->contains($eventLocationId)) {
             $this->event_location_id[] = $eventLocationId;
@@ -117,7 +117,7 @@ class Event
         return $this;
     }
 
-    public function removeEventLocationId(location $eventLocationId): self
+    public function removeEventLocationId( Location $eventLocationId): self
     {
         if ($this->event_location_id->contains($eventLocationId)) {
             $this->event_location_id->removeElement($eventLocationId);

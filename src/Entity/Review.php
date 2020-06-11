@@ -163,7 +163,7 @@ class Review
      *
      * @Groups( { "review:read" } )
      */
-    public function getReviewLocationId(): ?location
+    public function getReviewLocationId(): ?Location
     {
         return $this->review_location_id;
     }
@@ -175,7 +175,7 @@ class Review
      * @param Location|null $review_location_id
      * @return Review
      */
-    public function setReviewLocationId(?location $review_location_id): self
+    public function setReviewLocationId(?Location $review_location_id): self
     {
         $this->review_location_id = $review_location_id;
 
